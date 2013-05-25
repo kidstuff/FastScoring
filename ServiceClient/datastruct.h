@@ -22,20 +22,55 @@
 #include <QString>
 #include <QList>
 
-class Student {
+class Student
+{
 public:
     QString student_id;
     QString first_name;
     QString middle_name;
     QString last_name;
+    QString dayofbirth;
+    QString classname;
     float point;
 };
 
-class RoomList {
+class RoomList
+{
 public:
     QString subject_name;
     QString subject_id;
     QList<Student> students;
+    //header
+    QString school_name;
+    QString room_name;
+    QString rp_id;
+    QString rp_day;
+    QString rp_title;
+    QString term;
+    QString year;
+    QString subject;
+    QString credits;
+    QString teacher;
+    QString percent;
+    QString description;
+    QString exam_day;
+    QString exam_room;
+    //table header
+    QString tb_stt;
+    QString tb_mahs;
+    QString tb_hoten;
+    QString tb_ngsinh;
+    QString tb_diem;
+    QString tb_diemchu;
+    QString tb_st;
+    QString tb_chuky;
+    QString tb_lop;
+    //left footer
+    QString auth;
+    QString sign;
+    //right footer
+    QString rpft_day;
+    QString teach;
 };
 
 #endif // DATASTRUCT_H
