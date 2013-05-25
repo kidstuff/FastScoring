@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProcessWidget</class>
+ <widget class="QWidget" name="ProcessWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="verticalWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>381</width>
+     <height>281</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>381</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLineEdit" name="txtPath"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btFind">
+        <property name="text">
+         <string>Tìm</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btProc">
+        <property name="text">
+         <string>Xử lý</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btFind</sender>
+   <signal>clicked()</signal>
+   <receiver>ProcessWidget</receiver>
+   <slot>SelectScanFolder()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>343</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>396</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>SelectScanFolder()</slot>
+ </slots>
+</ui>
