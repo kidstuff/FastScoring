@@ -2,8 +2,10 @@ TEMPLATE = lib
 CONFIG += console
 CONFIG -= qt
 
-SOURCES +=
+SOURCES += \
+    serviceclient.cpp
 
 HEADERS += \
-    datastruct.h
+    datastruct.h \
+    serviceclient.h
 
