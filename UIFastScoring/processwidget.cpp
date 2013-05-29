@@ -18,7 +18,11 @@
 ****************************************************************************/
 #include "processwidget.h"
 #include "ui_processwidget.h"
+#include "globalsetting.h"
 #include <QFileDialog>
+#include <opencv2/highgui/highgui.hpp>
+
+using namespace cv;
 
 ProcessWidget::ProcessWidget(QWidget *parent) :
     QWidget(parent),
@@ -26,13 +30,40 @@ ProcessWidget::ProcessWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     pointExtracter = new PointDigitExtracter();
+    charExtracter = new CharDigitExtracter();
+    connect(this, SIGNAL(StartExtract(Mat&,bool)), charExtracter, SLOT(extract(Mat&,bool)));
 }
 
 ProcessWidget::~ProcessWidget()
 {
     delete ui;
+    delete pointExtracter;
+    delete charExtracter;
 }
 
 void ProcessWidget::SelectScanFolder() {
     ui->txtPath->setText(QFileDialog::getExistingDirectory(this, "Open Directory"));
+}
+
+void ProcessWidget::Process() {
+    QDir dir(ui->txtPath->text());
+    dir.setFilter(QDir::Files | QDir::NoSymLinks);
+    QStringList filters;
+    filters << "*.jpeg" << "*.jpg" << "*.png";
+    dir.setNameFilters(filters);
+
+    QFileInfoList list = dir.entryInfoList();
+    Mat src;
+    for(int i = 0; i < list.size(); i++) {
+        src = imread(list.at(i).filePath().toStdString(), CV_LOAD_IMAGE_GRAYSCALE);
+        if(!src.data) {
+            //TODO: notice about error reading image
+            continue;
+        }
+//        vector<float> d = charExtracter->extract(src, GlobalSetting::doNormalize());
+//        QString out_name("/home/nvcnvn/Desktop/scanned/form/out/out_%1.png");
+//        imwrite(out_name.arg(i).toStdString(), src);
+        emit StartExtract(src, GlobalSetting::doNormalize());
+        //break;
+    }
 }

@@ -19,10 +19,17 @@
 #ifndef CHARDIGITEXTRACTER_H
 #define CHARDIGITEXTRACTER_H
 
-class CharDigitExtracter
+#include "digitextracter.h"
+#include "digitreader.h"
+
+class CharDigitExtracter : public DigitExtracter
 {
 public:
     CharDigitExtracter();
+public slots:
+    vector<float> extract(Mat &src, bool do_normalize);
+private:
+    DigitReader* reader;
 };
 
 #endif // CHARDIGITEXTRACTER_H

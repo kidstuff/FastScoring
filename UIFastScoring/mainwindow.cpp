@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete procWidget;
 }
 
 void MainWindow::ShowProcWidget() {

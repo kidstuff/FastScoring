@@ -27,7 +27,7 @@ using namespace std;
 class DigitReader {
 public:
     DigitReader(QString path, int num_sample, int sample_size);
-    float classify(Mat& imgSrc);
+    float classify(Mat& imgSrc,int& accuracy);
     int test();
     static Mat preprocessing(Mat& imgSrc, int new_width, int new_height);
 private:

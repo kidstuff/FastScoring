@@ -1,6 +1,6 @@
 TEMPLATE = lib
 CONFIG += console
-CONFIG -= qt
+QT += core
 
 SOURCES += \
     digitextracter.cpp \

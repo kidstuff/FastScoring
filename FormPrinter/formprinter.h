@@ -21,7 +21,10 @@
 
 #include <QPrinter>
 #include <QPainter>
-#include "roomlist.h"
+#include <vector>
+#include "datastruct.h"
+
+using namespace std;
 
 class FormPrinter
 {

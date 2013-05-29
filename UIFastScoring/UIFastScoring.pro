@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    processwidget.cpp
+    processwidget.cpp \
+    globalsetting.cpp
 
 HEADERS  += mainwindow.h \
-    processwidget.h
+    processwidget.h \
+    globalsetting.h
 
 FORMS    += mainwindow.ui \
     processwidget.ui
@@ -43,3 +45,13 @@ else:unix: LIBS += -L$$OUT_PWD/../FormPrinter/ -lFormPrinter
 
 INCLUDEPATH += $$PWD/../FormPrinter
 DEPENDPATH += $$PWD/../FormPrinter
+
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += opencv
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../DigitReader/release/ -lDigitReader
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../DigitReader/debug/ -lDigitReader
+else:unix:!symbian: LIBS += -L$$OUT_PWD/../DigitReader/ -lDigitReader
+
+INCLUDEPATH += $$PWD/../DigitReader
+DEPENDPATH += $$PWD/../DigitReader

@@ -39,10 +39,12 @@ bool DigitReader::getData() {
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < train_samples; j++) {
+
             Mat src_img = imread(file_name.arg(file_path).arg(i).arg(j).toStdString(),
                                  CV_LOAD_IMAGE_GRAYSCALE);
 
             if (src_img.empty()) {
+                cout << file_name.arg(file_path).arg(i).arg(j).toStdString();
                 return false;
             }
             trainClasses.row(i * train_samples + j) = i;
@@ -58,10 +60,9 @@ void DigitReader::train() {
     knn.train(trainData, trainClasses, Mat(), false, K);
 }
 
-float DigitReader::classify(Mat &imgSrc) {
+float DigitReader::classify(Mat &imgSrc, int& accuracy) {
     Mat nearests(1, K, CV_32FC1);
     Mat samples;
-    int accuracy = 0;
     DigitReader::preprocessing(imgSrc, size, size).reshape(0, 1).convertTo(samples, CV_32FC1);
     //cout << samples << "\n";
     float result = knn.find_nearest(samples, K, 0, 0, &nearests, 0);
@@ -71,13 +72,14 @@ float DigitReader::classify(Mat &imgSrc) {
             accuracy++;
         }
     }
-
+    //cout << "accuracy" << accuracy << " ";
     return result;
 }
 
 int DigitReader::test() {
     int err = 0;
     int total = 0;
+    int accuracy = 0;
     QString file_name("%1/%2/%3.pbm");
 
     for (int i = 0; i < 10; i++) {
@@ -88,7 +90,7 @@ int DigitReader::test() {
             if (!src_img.empty()) {
                 Mat prs_img = DigitReader::preprocessing(src_img, size, size);
                 total++;
-                if ((int)classify(prs_img) != i) {
+                if ((int)classify(prs_img, accuracy) != i) {
                     err++;
                 }
             }

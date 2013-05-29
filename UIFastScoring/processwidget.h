@@ -20,6 +20,7 @@
 #define PROCESSWIDGET_H
 
 #include "pointdigitextracter.h"
+#include "chardigitextracter.h"
 #include <QWidget>
 
 namespace Ui {
@@ -37,9 +38,13 @@ public:
 private:
     Ui::ProcessWidget *ui;
     PointDigitExtracter* pointExtracter;
+    CharDigitExtracter* charExtracter;
 
 public slots:
     void SelectScanFolder();
+    void Process();
+signals:
+    void StartExtract(Mat& src, bool do_normalize);
 };
 
 #endif // PROCESSWIDGET_H

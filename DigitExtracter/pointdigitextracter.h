@@ -24,7 +24,8 @@ class PointDigitExtracter : public DigitExtracter
 {
 public:
     PointDigitExtracter();
-    list<float> extract(Mat &src, bool do_normalize);
+public slots:
+    vector<float> extract(Mat &src, bool do_normalize);
 };
 
 #endif // POINTDIGITEXTRACTER_H
