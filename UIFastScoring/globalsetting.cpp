@@ -26,3 +26,16 @@ GlobalSetting::GlobalSetting()
 bool GlobalSetting::doNormalize() {
     return true;
 }
+
+int GlobalSetting::method() {
+    return GlobalSetting::POINT;
+}
+
+vector<int> GlobalSetting::steps() {
+    vector<int> steps(4);
+    steps[0] = 2;
+    steps[1] = 5;
+    steps[2] = 7;
+    steps[3] = 9;
+    return steps;
+}

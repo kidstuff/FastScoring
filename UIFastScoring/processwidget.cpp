@@ -19,6 +19,8 @@
 #include "processwidget.h"
 #include "ui_processwidget.h"
 #include "globalsetting.h"
+#include "pointdigitextracter.h"
+#include "chardigitextracter.h"
 #include <QFileDialog>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -29,16 +31,18 @@ ProcessWidget::ProcessWidget(QWidget *parent) :
     ui(new Ui::ProcessWidget)
 {
     ui->setupUi(this);
-    pointExtracter = new PointDigitExtracter();
-    charExtracter = new CharDigitExtracter();
-    connect(this, SIGNAL(StartExtract(Mat&,bool)), charExtracter, SLOT(extract(Mat&,bool)));
+    if(GlobalSetting::method() == GlobalSetting::CHAR) {
+        extracter = new CharDigitExtracter();
+    } else {
+        extracter = new PointDigitExtracter(GlobalSetting::steps());
+    }
+    connect(this, SIGNAL(StartExtract(Mat&,bool)), extracter, SLOT(extract(Mat&,bool)));
 }
 
 ProcessWidget::~ProcessWidget()
 {
     delete ui;
-    delete pointExtracter;
-    delete charExtracter;
+    delete extracter;
 }
 
 void ProcessWidget::SelectScanFolder() {
@@ -60,10 +64,7 @@ void ProcessWidget::Process() {
             //TODO: notice about error reading image
             continue;
         }
-//        vector<float> d = charExtracter->extract(src, GlobalSetting::doNormalize());
-//        QString out_name("/home/nvcnvn/Desktop/scanned/form/out/out_%1.png");
-//        imwrite(out_name.arg(i).toStdString(), src);
         emit StartExtract(src, GlobalSetting::doNormalize());
-        //break;
+        break;
     }
 }

@@ -20,11 +20,18 @@
 #ifndef GLOBALSETTING_H
 #define GLOBALSETTING_H
 
+#include <vector>
+
+using namespace std;
+
 class GlobalSetting
 {
 public:
     GlobalSetting();
+    enum Method{POINT, CHAR};
     static bool doNormalize();
+    static int method();
+    static vector<int> steps();
 };
 
 #endif // GLOBALSETTING_H

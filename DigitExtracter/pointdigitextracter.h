@@ -23,9 +23,11 @@
 class PointDigitExtracter : public DigitExtracter
 {
 public:
-    PointDigitExtracter();
+    PointDigitExtracter(vector<int> steps);
 public slots:
     vector<float> extract(Mat &src, bool do_normalize);
+private:
+    vector<int> odd_steps;
 };
 
 #endif // POINTDIGITEXTRACTER_H
