@@ -21,6 +21,7 @@
 #include "globalsetting.h"
 #include "pointdigitextracter.h"
 #include "chardigitextracter.h"
+#include "imagepreview.h"
 #include <QFileDialog>
 #include <opencv2/highgui/highgui.hpp>
 

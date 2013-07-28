@@ -16,41 +16,26 @@
 **    You should have received a copy of the GNU Affero General Public License
 **    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
-#ifndef FORMPRINTER_H
-#define FORMPRINTER_H
 
-#include <QPrinter>
-#include <QPainter>
-#include <vector>
-#include "courseinfo.h"
+#ifndef IMAGEPREVIEW_H
+#define IMAGEPREVIEW_H
 
-using namespace std;
+#include <QScrollArea>
 
-class FormPrinter
+namespace Ui {
+class ImagePreview;
+}
+
+class ImagePreview : public QScrollArea
 {
+    Q_OBJECT
+    
 public:
-    FormPrinter(vector<int> steps);
-    enum FormType {CHAR, POINT};
-    void printing(CourseInfo& r, QString filename, FormType t);
+    explicit ImagePreview(QWidget *parent = 0);
+    ~ImagePreview();
+    
 private:
-    vector<int> odd_steps;
-    QPrinter *printer;
-    QPainter *painter;
-    void print_header(CourseInfo& r);
-    void print_footer(CourseInfo& r);
-    void print_table_header(CourseInfo& r);
-    void print_table();
-    void print_table_data(CourseInfo& r);
-    void print_line1(QPoint p);
-    void print_line2(QPoint p);
-    void print_line3(QPoint p);
-    void print_line4(QPoint p);
-    void print_line5(QPoint p);
-    void print_line6(QPoint p);
-    void print_line7(QPoint p);
-    void print_number(int num, QPoint p);
-    void print_pagecode(QPoint p);
-    void print_rectangle(QPoint p);
+    Ui::ImagePreview *ui;
 };
 
-#endif // FORMPRINTER_H
+#endif // IMAGEPREVIEW_H

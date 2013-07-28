@@ -1,11 +1,14 @@
 TEMPLATE = lib
 CONFIG += console
-CONFIG -= qt
+QT += core xml
 
 SOURCES += \
-    serviceclient.cpp
+    serviceclient.cpp \
+    student.cpp \
+    courseinfo.cpp
 
 HEADERS += \
-    datastruct.h \
-    serviceclient.h
+    serviceclient.h \
+    student.h \
+    courseinfo.h
 

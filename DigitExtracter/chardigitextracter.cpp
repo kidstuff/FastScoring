@@ -29,6 +29,7 @@ CharDigitExtracter::CharDigitExtracter()
 }
 
 vector<float> CharDigitExtracter::extract(Mat &src, bool do_normalize) {
+    vector<float> results(25);
     float startY, startX, square_size;
     pre_extract(src, do_normalize, startX, startY, square_size);
 
@@ -36,26 +37,27 @@ vector<float> CharDigitExtracter::extract(Mat &src, bool do_normalize) {
     Mat digit;
     float total = 0;
     for(int i = 0; i < 25; i++) {
-        int accuracy = 0;
+        //accuracy
+        int a1 = 0;
+        int a2 = 0;
         //decimal extract
         box_decimal = Rect(startX - square_size*4/6, startY + square_size/10, square_size*2/3, square_size*5/6);
         rectangle(src, box_decimal, Scalar(150));
         digit = src(box_decimal);
         digit = DigitReader::preprocessing(digit, 50, 50);
-        total = reader->classify(digit, accuracy);
+        total = reader->classify(digit, a1);
 
         //fraction extract
         box_fraction = Rect(startX + square_size/6, startY + square_size/10, square_size*2/3, square_size*5/6);
         rectangle(src, box_fraction, Scalar(150));
         digit = src(box_fraction);
         digit = DigitReader::preprocessing(digit, 50, 50);
-        total = total + reader->classify(digit, accuracy)/10;
-        cout << total << "|" << accuracy << endl;
-
+        total = total + reader->classify(digit, a2)/10;
+        cout << total << " (" << a1 << "," << a2 << ")" << endl;
+        results[i] = total;
         startY = floor(startY + square_size);
     }
-    cout << "_______________________" << endl;
+    imwrite("/home/nvcnvn/Desktop/scanned/form/out/test.png", src);
     //TODO: API change to output accuracy
-    vector<float> results;
     return results;
 }

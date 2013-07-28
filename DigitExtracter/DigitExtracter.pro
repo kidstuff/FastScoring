@@ -10,7 +10,8 @@ SOURCES += \
 HEADERS += \
     digitextracter.h \
     pointdigitextracter.h \
-    chardigitextracter.h
+    chardigitextracter.h \
+    digitresult.h
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../DigitReader/release/ -lDigitReader

@@ -66,13 +66,13 @@ float DigitReader::classify(Mat &imgSrc, int& accuracy) {
     DigitReader::preprocessing(imgSrc, size, size).reshape(0, 1).convertTo(samples, CV_32FC1);
     //cout << samples << "\n";
     float result = knn.find_nearest(samples, K, 0, 0, &nearests, 0);
-
+    accuracy = 0;
     for (int i = 0; i < K; i++) {
         if (nearests.at<float>(i) == result) {
             accuracy++;
         }
     }
-    //cout << "accuracy" << accuracy << " ";
+    cout << "nearests" << nearests << " ";
     return result;
 }
 

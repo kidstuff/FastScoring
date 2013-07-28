@@ -16,41 +16,30 @@
 **    You should have received a copy of the GNU Affero General Public License
 **    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
-#ifndef FORMPRINTER_H
-#define FORMPRINTER_H
 
-#include <QPrinter>
-#include <QPainter>
-#include <vector>
+#include "student.h"
 #include "courseinfo.h"
 
-using namespace std;
+int CourseInfo::rowCount(const QModelIndex &parent) const {
+    return students.size();
+}
 
-class FormPrinter
-{
-public:
-    FormPrinter(vector<int> steps);
-    enum FormType {CHAR, POINT};
-    void printing(CourseInfo& r, QString filename, FormType t);
-private:
-    vector<int> odd_steps;
-    QPrinter *printer;
-    QPainter *painter;
-    void print_header(CourseInfo& r);
-    void print_footer(CourseInfo& r);
-    void print_table_header(CourseInfo& r);
-    void print_table();
-    void print_table_data(CourseInfo& r);
-    void print_line1(QPoint p);
-    void print_line2(QPoint p);
-    void print_line3(QPoint p);
-    void print_line4(QPoint p);
-    void print_line5(QPoint p);
-    void print_line6(QPoint p);
-    void print_line7(QPoint p);
-    void print_number(int num, QPoint p);
-    void print_pagecode(QPoint p);
-    void print_rectangle(QPoint p);
-};
+int CourseInfo::columnCount(const QModelIndex &parent) const {
+    return 8;
+}
 
-#endif // FORMPRINTER_H
+QVariant CourseInfo::data(const QModelIndex &index, int role) const {
+    if(role != Qt::DisplayRole || index.column() >= 8 || index.row() >= students.size()) {
+        return QVariant();
+    }
+    Student s = students[index.row()];
+    switch(index.column()) {
+    case 0: return index.column()+1;
+    case 1: return s.student_id;
+    case 2: return s.last_name;
+    case 3: return s.middle_name;
+    case 4: return s.first_name;
+    case 5: return s.dayofbirth;
+    case 6: return s.point;
+    }
+}

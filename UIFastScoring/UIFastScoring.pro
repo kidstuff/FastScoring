@@ -15,14 +15,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     processwidget.cpp \
-    globalsetting.cpp
+    globalsetting.cpp \
+    imagepreview.cpp
 
 HEADERS  += mainwindow.h \
     processwidget.h \
-    globalsetting.h
+    globalsetting.h \
+    imagepreview.h
 
 FORMS    += mainwindow.ui \
-    processwidget.ui
+    processwidget.ui \
+    imagepreview.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ServiceClient/release/ -lServiceClient
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ServiceClient/debug/ -lServiceClient

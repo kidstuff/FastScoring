@@ -1,6 +1,6 @@
 TEMPLATE = lib
 CONFIG += console
-QT += core gui
+QT += core gui xml
 
 SOURCES += \
     formprinter.cpp

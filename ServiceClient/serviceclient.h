@@ -20,10 +20,15 @@
 #ifndef SERVICECLIENT_H
 #define SERVICECLIENT_H
 
+#include <QString>
+
 class ServiceClient
 {
 public:
     ServiceClient();
+    bool Login(QString username, QString password);
+    bool Logout();
+
 };
 
 #endif // SERVICECLIENT_H

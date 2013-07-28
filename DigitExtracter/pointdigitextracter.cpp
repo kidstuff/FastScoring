@@ -75,7 +75,9 @@ vector<float> PointDigitExtracter::extract(Mat &src, bool do_normalize) {
             }
 
         }
+        cout << results[i] <<endl;
         startY = floor(startY + square_size);
     }
+    imwrite("/home/nvcnvn/Desktop/scanned/form/out/test.png", src);
     return results;
 }
