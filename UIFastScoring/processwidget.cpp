@@ -33,7 +33,7 @@ ProcessWidget::ProcessWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     if(GlobalSetting::method() == GlobalSetting::CHAR) {
-        extracter = new CharDigitExtracter();
+        extracter = new CharDigitExtracter(GlobalSetting::dataPath());
     } else {
         extracter = new PointDigitExtracter(GlobalSetting::steps());
     }

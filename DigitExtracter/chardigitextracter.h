@@ -25,8 +25,19 @@
 class CharDigitExtracter : public DigitExtracter
 {
 public:
-    CharDigitExtracter();
+    /**
+     * @brief CharDigitExtracter recieve a dataPath that is the localtion to the
+     * OCR learning data.
+     * @param dataPath
+     */
+    CharDigitExtracter(QString dataPath);
 public slots:
+    /**
+     * @brief extract
+     * @param src
+     * @param do_normalize
+     * @return
+     */
     vector<float> extract(Mat &src, bool do_normalize);
 private:
     DigitReader* reader;

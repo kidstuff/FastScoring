@@ -28,7 +28,7 @@ bool GlobalSetting::doNormalize() {
 }
 
 int GlobalSetting::method() {
-    return GlobalSetting::POINT;
+    return GlobalSetting::CHAR;
 }
 
 vector<int> GlobalSetting::steps() {
@@ -38,4 +38,8 @@ vector<int> GlobalSetting::steps() {
     steps[2] = 7;
     steps[3] = 9;
     return steps;
+}
+
+QString GlobalSetting::dataPath() {
+    return getenv("DATAPATH");
 }

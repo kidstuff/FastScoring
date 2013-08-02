@@ -8,6 +8,6 @@ SOURCES += \
 HEADERS += \
     digitreader.h
 
-
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += opencv
+

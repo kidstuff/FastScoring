@@ -21,6 +21,7 @@
 #define GLOBALSETTING_H
 
 #include <vector>
+#include <QString>
 
 using namespace std;
 
@@ -32,6 +33,7 @@ public:
     static bool doNormalize();
     static int method();
     static vector<int> steps();
+    static QString dataPath();
 };
 
 #endif // GLOBALSETTING_H

@@ -72,7 +72,6 @@ float DigitReader::classify(Mat &imgSrc, int& accuracy) {
             accuracy++;
         }
     }
-    cout << "nearests" << nearests << " ";
     return result;
 }
 

@@ -26,7 +26,19 @@ using namespace std;
 
 class DigitReader {
 public:
+    /**
+     * @brief DigitReader
+     * @param path the localtion to the OCR learning data.
+     * @param num_sample number of sample to be learn
+     * @param sample_size size of sample (all samples need to be square)
+     */
     DigitReader(QString path, int num_sample, int sample_size);
+    /**
+     * @brief classify
+     * @param imgSrc
+     * @param accuracy the accuracy
+     * @return return the value of imgSrc image with ouput accuracy
+     */
     float classify(Mat& imgSrc,int& accuracy);
     int test();
     static Mat preprocessing(Mat& imgSrc, int new_width, int new_height);

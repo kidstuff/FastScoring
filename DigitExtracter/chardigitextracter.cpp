@@ -19,13 +19,14 @@
 #include "chardigitextracter.h"
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include <QDir>
 
 using namespace std;
 using namespace cv;
 
-CharDigitExtracter::CharDigitExtracter()
+CharDigitExtracter::CharDigitExtracter(QString dataPath)
 {
-    reader = new DigitReader("/home/nvcnvn/WorkSpace/FastScoring/FastScoring/Data/penpall", 400, 50);
+    reader = new DigitReader(dataPath, 400, 50);
 }
 
 vector<float> CharDigitExtracter::extract(Mat &src, bool do_normalize) {
@@ -53,7 +54,7 @@ vector<float> CharDigitExtracter::extract(Mat &src, bool do_normalize) {
         digit = src(box_fraction);
         digit = DigitReader::preprocessing(digit, 50, 50);
         total = total + reader->classify(digit, a2)/10;
-        cout << total << " (" << a1 << "," << a2 << ")" << endl;
+        cout << total << endl;
         results[i] = total;
         startY = floor(startY + square_size);
     }
