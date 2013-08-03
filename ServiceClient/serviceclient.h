@@ -20,14 +20,18 @@
 #ifndef SERVICECLIENT_H
 #define SERVICECLIENT_H
 
+#include "courseinfo.h"
 #include <QString>
 
-class ServiceClient
+class ServiceClient : public QObject
 {
+    Q_OBJECT
 public:
     ServiceClient();
-    bool Login(QString username, QString password);
-    bool Logout();
+public slots:
+    void Login(QString username, QString password);
+    void Logout();
+    void GetCourseInfo(QString idStr);
 
 };
 
