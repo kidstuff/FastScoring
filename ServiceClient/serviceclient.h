@@ -20,8 +20,13 @@
 #ifndef SERVICECLIENT_H
 #define SERVICECLIENT_H
 
-#include "courseinfo.h"
+#include "response.h"
+#include "coursesummary.h"
 #include <QString>
+#include <QUrlQuery>
+#include <QAbstractTableModel>
+
+class CourseInfo;
 
 class ServiceClient : public QObject
 {
@@ -32,6 +37,14 @@ public slots:
     void Login(QString username, QString password);
     void Logout();
     void GetCourseInfo(QString idStr);
+    void GetCourseList(QString year, QString semester, QString faculty,
+                       QString supject, QString lecturer, QUrlQuery* extra = 0);
+    void SubmitScores();
+signals:
+    void LoginFinished(Response r);
+    void LogoutFinished(Response r);
+    void GetCourseInfoFinished(CourseInfo* inf, Response r);
+    void GetCourseListFinished(QList<CourseSummary> sumary, Response r);
 
 };
 
