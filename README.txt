@@ -8,4 +8,4 @@ This version also require and Linux base with pkg-config and OpenCV 2.4.3 instal
 Setup
 ====
 You need set DATAPATH=location/to/your/sample/data (the folder contain pencil or penpal OCR sample) to be able to use the OCR function (OMR function work fine without it).
-
+Checkout our [wiki page](https://github.com/kidstuff/FastScoring/wiki/Environment-variable) for example
