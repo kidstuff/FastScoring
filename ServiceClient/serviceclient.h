@@ -38,7 +38,7 @@ public slots:
     void Logout();
     void GetCourseInfo(QString idStr);
     void GetCourseList(QString year, QString semester, QString faculty,
-                       QString supject, QString lecturer, QUrlQuery* extra = 0);
+                       QString supject, QString lecturer, QUrlQuery* extra);
     void SubmitScores();
 signals:
     void LoginFinished(Response r);

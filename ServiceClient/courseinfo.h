@@ -22,17 +22,14 @@
 
 #include "student.h"
 #include <QAbstractTableModel>
-#include <QDomElement>
 
 class CourseInfo : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    CourseInfo(QDomElement xml);
     int rowCount(const QModelIndex &parent = QModelIndex()) const ;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    QDomElement toDomElement();
     QList<Student> students;
     QString course_id;
     QString subject_name;

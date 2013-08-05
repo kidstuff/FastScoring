@@ -16,31 +16,32 @@
 **    You should have received a copy of the GNU Affero General Public License
 **    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
-#ifndef CHARDIGITEXTRACTER_H
-#define CHARDIGITEXTRACTER_H
 
-#include "digitextracter.h"
-#include "digitreader.h"
+#include "digitresult.h"
 
-class CharDigitExtracter : public DigitExtracter
-{
-public:
-    /**
-     * @brief CharDigitExtracter recieve a dataPath that is the localtion to the
-     * OCR learning data.
-     * @param dataPath
-     */
-    CharDigitExtracter(QString dataPath);
-public slots:
-    /**
-     * @brief extract
-     * @param src
-     * @param do_normalize
-     * @return
-     */
-    DigitResult* extract(Mat &src, bool do_normalize);
-private:
-    DigitReader* reader;
-};
+DigitResult::DigitResult(long code, char num){
+    this->page_code = code;
+    this->page_num = num;
+}
 
-#endif // CHARDIGITEXTRACTER_H
+int DigitResult::rowCount(const QModelIndex &parent) const {
+    return this->result.size();
+}
+
+int DigitResult::columnCount(const QModelIndex &parent) const {
+    return 2;
+}
+
+QVariant DigitResult::data(const QModelIndex &index, int role) const {
+    if(role != Qt::DisplayRole || index.column() >= 2 || index.row() >= result.size()) {
+        return QVariant();
+    }
+    DigitInfo inf = result[index.row()];
+    switch(index.column()) {
+    case 0: return inf.score;
+    case 1: return inf.accuracy;
+    }
+    return QVariant();
+}
+
+

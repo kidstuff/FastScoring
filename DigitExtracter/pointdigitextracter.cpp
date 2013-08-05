@@ -25,8 +25,11 @@ PointDigitExtracter::PointDigitExtracter(vector<int> steps)
     odd_steps = steps;
 }
 
-vector<float> PointDigitExtracter::extract(Mat &src, bool do_normalize) {
-    vector<float> results(25);
+DigitResult* PointDigitExtracter::extract(Mat &src, bool do_normalize) {
+    DigitResult* dresult = new DigitResult(1,1);
+    vector<DigitInfo> results(25);
+    dresult->result = results;
+
     float startY, startX, square_size;
     pre_extract(src, do_normalize, startX, startY, square_size);
 
@@ -65,19 +68,20 @@ vector<float> PointDigitExtracter::extract(Mat &src, bool do_normalize) {
         }
 
         if(decimal == -1 && fraction == -1) {
-            results[i] = -1;
+            dresult->result[i].score = -1;
         } else {
             if(decimal != -1) {
-                results[i] = decimal;
+                dresult->result[i].score = decimal;
             }
             if(fraction != -1) {
-                results[i] = decimal + fraction;
+                dresult->result[i].score = decimal + fraction;
             }
 
         }
-        cout << results[i] <<endl;
+        dresult->result[i].accuracy = 10;
         startY = floor(startY + square_size);
     }
-    imwrite("/home/nvcnvn/Desktop/scanned/form/out/test.png", src);
-    return results;
+
+    emit extractFinished(dresult);
+    return dresult;
 }

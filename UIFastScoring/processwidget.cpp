@@ -37,7 +37,10 @@ ProcessWidget::ProcessWidget(QWidget *parent) :
     } else {
         extracter = new PointDigitExtracter(GlobalSetting::steps());
     }
-    connect(this, SIGNAL(StartExtract(Mat&,bool)), extracter, SLOT(extract(Mat&,bool)));
+    connect(this, SIGNAL(StartExtract(Mat&,bool)),
+            extracter,SLOT(extract(Mat&,bool)));
+    connect(extracter, SIGNAL(extractFinished(DigitResult*)),
+            this, SLOT(ViewResult(DigitResult*)));
 }
 
 ProcessWidget::~ProcessWidget()
@@ -68,4 +71,8 @@ void ProcessWidget::Process() {
         emit StartExtract(src, GlobalSetting::doNormalize());
         break;
     }
+}
+
+void ProcessWidget::ViewResult(DigitResult *result) {
+    this->ui->tableView->setModel(result);
 }

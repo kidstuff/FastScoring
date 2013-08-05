@@ -19,6 +19,7 @@
 #ifndef DIGITEXTRACTER_H
 #define DIGITEXTRACTER_H
 
+#include "digitresult.h"
 #include "opencv2/imgproc/imgproc.hpp"
 #include <QObject>
 
@@ -45,7 +46,7 @@ public slots:
      * (re-format) or not
      * @return a list of point data
      */
-    virtual vector<float> extract(Mat &src, bool do_normalize) = 0;
+    virtual DigitResult* extract(Mat &src, bool do_normalize) = 0;
 protected:
     /**
      * @brief The ControlShape struct is a square with for point
@@ -81,7 +82,8 @@ protected:
      * @param startX the begin Y position of data area
      * @param square_size every line of data should has relative with this
      */
-    static void pre_extract(Mat &src, bool do_normalize, float& startY, float& startX, float& square_size);
+    static void pre_extract(Mat &src, bool do_normalize,
+                            float& startY, float& startX, float& square_size);
     /**
      * @brief normalize rotate the src if need
      * @param src orgin cv:Mat image
@@ -92,7 +94,10 @@ protected:
      * @param avgH average height of square
      * @return
      */
-    static bool normalize(Mat &src, Mat &dst, ControlShape& shapea, ControlShape& shapeb, float avgW, float avgH);
+    static bool normalize(Mat& src, Mat& dst,ControlShape& shapea,
+                          ControlShape& shapeb, float avgW, float avgH);
+signals:
+    void extractFinished(DigitResult*);
 };
 
 #endif // DIGITEXTRACTER_H

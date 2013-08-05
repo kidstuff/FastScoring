@@ -20,12 +20,13 @@
 #define POINTDIGITEXTRACTER_H
 
 #include "digitextracter.h"
+
 class PointDigitExtracter : public DigitExtracter
 {
 public:
     PointDigitExtracter(vector<int> steps);
 public slots:
-    vector<float> extract(Mat &src, bool do_normalize);
+    DigitResult* extract(Mat &src, bool do_normalize);
 private:
     vector<int> odd_steps;
 };

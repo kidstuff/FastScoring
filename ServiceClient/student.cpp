@@ -19,10 +19,6 @@
 
 #include "student.h"
 
-Student::Student(QDomElement xml) {
-
-}
-
-QDomElement Student::toDomElement() {
+Student::Student() {
 
 }

@@ -19,12 +19,17 @@
 #ifndef PROCESSWIDGET_H
 #define PROCESSWIDGET_H
 
-#include "digitextracter.h"
 #include <QWidget>
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
 
 namespace Ui {
 class ProcessWidget;
 }
+
+class DigitExtracter;
+class DigitResult;
 
 class ProcessWidget : public QWidget
 {
@@ -41,6 +46,7 @@ private:
 public slots:
     void SelectScanFolder();
     void Process();
+    void ViewResult(DigitResult* result);
 signals:
     void StartExtract(Mat& src, bool do_normalize);
 };

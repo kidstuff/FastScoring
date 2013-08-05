@@ -22,3 +22,23 @@
 ServiceClient::ServiceClient()
 {
 }
+
+void ServiceClient::Login(QString username, QString password){
+
+}
+void ServiceClient::Logout(){
+
+}
+
+void ServiceClient::GetCourseInfo(QString idStr){
+
+}
+
+void ServiceClient::GetCourseList(QString year, QString semester, QString faculty,
+                   QString supject, QString lecturer, QUrlQuery* extra){
+
+}
+
+void ServiceClient::SubmitScores(){
+
+}

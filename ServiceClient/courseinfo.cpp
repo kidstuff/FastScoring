@@ -42,4 +42,5 @@ QVariant CourseInfo::data(const QModelIndex &index, int role) const {
     case 5: return s.dayofbirth;
     case 6: return s.point;
     }
+    return QVariant();
 }

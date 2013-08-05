@@ -9,7 +9,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = UIFastScoring
 TEMPLATE = app
-
+LIBS += -Xlinker --trace
 
 SOURCES += main.cpp\
         mainwindow.cpp \

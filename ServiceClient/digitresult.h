@@ -21,19 +21,25 @@
 #define DIGITRESULT_H
 
 #include <vector>
+#include <QAbstractTableModel>
 
 using namespace std;
 
-class DigiResult {
+class DigitInfo {
 public:
-    class Result {
-        float score;
-        int accuracy;
-    };
+    float score;
+    int accuracy;
+};
 
+class DigitResult : public QAbstractTableModel  {
+public:
+    DigitResult(long code, char num);
     unsigned long page_code;
     unsigned char page_num;
-    vector<Result> result;
+    vector<DigitInfo> result;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const ;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 };
 
 #endif // DIGITRESULT_H

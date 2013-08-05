@@ -29,8 +29,11 @@ CharDigitExtracter::CharDigitExtracter(QString dataPath)
     reader = new DigitReader(dataPath, 400, 50);
 }
 
-vector<float> CharDigitExtracter::extract(Mat &src, bool do_normalize) {
-    vector<float> results(25);
+DigitResult* CharDigitExtracter::extract(Mat &src, bool do_normalize) {
+    DigitResult* dresult = new DigitResult(1,1);
+    vector<DigitInfo> results(25);
+    dresult->result = results;
+
     float startY, startX, square_size;
     pre_extract(src, do_normalize, startX, startY, square_size);
 
@@ -54,11 +57,12 @@ vector<float> CharDigitExtracter::extract(Mat &src, bool do_normalize) {
         digit = src(box_fraction);
         digit = DigitReader::preprocessing(digit, 50, 50);
         total = total + reader->classify(digit, a2)/10;
-        cout << total << endl;
-        results[i] = total;
+
+        dresult->result[i].score = total;
+        dresult->result[i].accuracy = (a1+a2)/2;
         startY = floor(startY + square_size);
     }
-    imwrite("/home/nvcnvn/Desktop/scanned/form/out/test.png", src);
-    //TODO: API change to output accuracy
-    return results;
+
+    emit extractFinished(dresult);
+    return dresult;
 }

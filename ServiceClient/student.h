@@ -20,13 +20,11 @@
 #define STUDENT_H
 
 #include <QString>
-#include <QDomElement>
 
 class Student
 {
 public:
-    Student(QDomElement xml);
-    QDomElement toDomElement();
+    Student();
     QString student_id;
     QString first_name;
     QString middle_name;
