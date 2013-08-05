@@ -31,16 +31,17 @@ class FormPrinter
 public:
     FormPrinter(vector<int> steps);
     enum FormType {CHAR, POINT};
-    void printing(CourseInfo& r, QString filename, FormType t);
+public slots:
+    void Print(CourseInfo* r, QString filename, FormType t);
 private:
     vector<int> odd_steps;
     QPrinter *printer;
     QPainter *painter;
-    void print_header(CourseInfo& r);
-    void print_footer(CourseInfo& r);
-    void print_table_header(CourseInfo& r);
+    void print_header(CourseInfo* r);
+    void print_footer(CourseInfo* r);
+    void print_table_header(CourseInfo* r);
     void print_table();
-    void print_table_data(CourseInfo& r);
+    void print_table_data(CourseInfo* r);
     void print_line1(QPoint p);
     void print_line2(QPoint p);
     void print_line3(QPoint p);

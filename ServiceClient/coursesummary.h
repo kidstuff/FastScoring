@@ -20,10 +20,20 @@
 #ifndef COURSESUMMARY_H
 #define COURSESUMMARY_H
 
+#include <QString>
+
 class CourseSummary
 {
 public:
     CourseSummary();
+    QString course_id;
+    QString term;
+    QString year;
+    QString subject;
+    QString credits;
+    QString percent;
+    QString description;
+    QString lecturer;
 };
 
 #endif // COURSESUMMARY_H

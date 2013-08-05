@@ -21,9 +21,10 @@
 #define COURSEINFO_H
 
 #include "student.h"
+#include "coursesummary.h"
 #include <QAbstractTableModel>
 
-class CourseInfo : public QAbstractTableModel
+class CourseInfo : public QAbstractTableModel, public CourseSummary
 {
     Q_OBJECT
 public:
@@ -44,27 +45,21 @@ public:
     QString rp_id;
     QString rp_day;
     QString rp_title;
-    QString term;
-    QString year;
-    QString subject;
-    QString credits;
-    QString percent;
-    QString description;
     QString exam_day;
     QString exam_room;
     //table header
-    const QString tb_stt;
-    const QString tb_mahs;
-    const QString tb_hoten;
-    const QString tb_ngsinh;
-    const QString tb_diem;
-    const QString tb_diemchu;
-    const QString tb_st;
-    const QString tb_chuky;
-    const QString tb_lop;
+    QString tb_stt;
+    QString tb_mahs;
+    QString tb_hoten;
+    QString tb_ngsinh;
+    QString tb_diem;
+    QString tb_diemchu;
+    QString tb_st;
+    QString tb_chuky;
+    QString tb_lop;
     //left footer
-    const QString auth;
-    const QString sign;
+    QString auth;
+    QString sign;
     //right footer
     QString rpft_day;
     QString teach;
