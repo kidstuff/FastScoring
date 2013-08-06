@@ -15,16 +15,19 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     processwidget.cpp \
     globalsetting.cpp \
-    imagepreview.cpp
+    imagepreview.cpp \
+    courseinfowidget.cpp
 
 HEADERS  += mainwindow.h \
     processwidget.h \
     globalsetting.h \
-    imagepreview.h
+    imagepreview.h \
+    courseinfowidget.h
 
 FORMS    += mainwindow.ui \
     processwidget.ui \
-    imagepreview.ui
+    imagepreview.ui \
+    courseinfowidget.ui
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += opencv
