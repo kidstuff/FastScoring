@@ -21,10 +21,18 @@
 #include "ui_courseinfowidget.h"
 
 CourseInfoWidget::CourseInfoWidget(QWidget *parent) :
-    QWidget(parent),
+    QTabWidget(parent),
     ui(new Ui::CourseInfoWidget)
 {
     ui->setupUi(this);
+}
+
+void CourseInfoWidget::LoadCourseList() {
+    emit GetCourseList("2013", "2", "id-f-123", "id-s-456", "id-l-789", NULL);
+}
+
+void CourseInfoWidget::DisplayCourseList(CourseSummaryList *sumary, Response r) {
+    ui->tableView->setModel(sumary);
 }
 
 CourseInfoWidget::~CourseInfoWidget()

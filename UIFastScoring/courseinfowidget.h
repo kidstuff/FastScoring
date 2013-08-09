@@ -20,13 +20,16 @@
 #ifndef COURSEINFOWIDGET_H
 #define COURSEINFOWIDGET_H
 
-#include <QWidget>
+#include "coursesummary.h"
+#include "response.h"
+#include <QTabWidget>
+#include <QUrlQuery>
 
 namespace Ui {
 class CourseInfoWidget;
 }
 
-class CourseInfoWidget : public QWidget
+class CourseInfoWidget : public QTabWidget
 {
     Q_OBJECT
     
@@ -34,6 +37,13 @@ public:
     explicit CourseInfoWidget(QWidget *parent = 0);
     ~CourseInfoWidget();
     
+public slots:
+    void LoadCourseList();
+    void DisplayCourseList(CourseSummaryList* sumary, Response r);
+
+signals:
+    void GetCourseList(QString year, QString term, QString faculty,
+                       QString supject, QString lecturer, QUrlQuery* extra);
 private:
     Ui::CourseInfoWidget *ui;
 };

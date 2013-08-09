@@ -18,6 +18,7 @@
 ****************************************************************************/
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "serviceclient.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,6 +26,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     showMaximized();
     procWidget = new ProcessWidget();
+    courseWidget = new CourseInfoWidget();
+
+    ServiceClient* client = new ServiceClient();
+
+    connect(courseWidget, &CourseInfoWidget::GetCourseList,
+            client, &ServiceClient::GetCourseList);
+    connect(client, &ServiceClient::GetCourseListFinished,
+            courseWidget, &CourseInfoWidget::DisplayCourseList);
+
+    connect(ui->actionCourseList, &QAction::triggered,
+            this, &MainWindow::ShowCourseWidget);
 }
 
 MainWindow::~MainWindow() {
@@ -34,4 +46,8 @@ MainWindow::~MainWindow() {
 
 void MainWindow::ShowProcWidget() {
     setCentralWidget(procWidget);
+}
+
+void MainWindow::ShowCourseWidget() {
+    setCentralWidget(courseWidget);
 }

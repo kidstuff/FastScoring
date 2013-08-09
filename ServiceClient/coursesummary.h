@@ -21,6 +21,8 @@
 #define COURSESUMMARY_H
 
 #include <QString>
+#include <QList>
+#include <QAbstractTableModel>
 
 class CourseSummary
 {
@@ -34,6 +36,15 @@ public:
     QString percent;
     QString description;
     QString lecturer;
+};
+
+class CourseSummaryList : public QList<CourseSummary>, public  QAbstractTableModel
+{
+public:
+    CourseSummaryList();
+    int rowCount(const QModelIndex &parent = QModelIndex()) const ;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 };
 
 #endif // COURSESUMMARY_H

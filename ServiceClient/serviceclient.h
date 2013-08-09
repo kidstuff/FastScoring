@@ -44,7 +44,7 @@ signals:
     void LoginFinished(Response r);
     void LogoutFinished(Response r);
     void GetCourseInfoFinished(CourseInfo* inf, Response r);
-    void GetCourseListFinished(QList<CourseSummary> sumary, Response r);
+    void GetCourseListFinished(CourseSummaryList* sumary, Response r);
 
 };
 

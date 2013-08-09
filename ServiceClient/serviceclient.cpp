@@ -86,7 +86,7 @@ void ServiceClient::GetCourseInfo(QString idStr){
 
 void ServiceClient::GetCourseList(QString year, QString term, QString faculty,
                    QString supject, QString lecturer, QUrlQuery* extra){
-    QList<CourseSummary> summaries;
+    CourseSummaryList* summaries = new CourseSummaryList();
     for(int i=0; i<30;i++){
         CourseSummary summary;
         summary.course_id = "1231231231";
@@ -97,7 +97,7 @@ void ServiceClient::GetCourseList(QString year, QString term, QString faculty,
         summary.term = "2";
         summary.year = "2013";
         summary.lecturer ="ng v a";
-        summaries.append(summary);
+        summaries->append(summary);
     }
     Response r;
 

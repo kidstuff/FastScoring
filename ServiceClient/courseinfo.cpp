@@ -25,22 +25,25 @@ int CourseInfo::rowCount(const QModelIndex &parent) const {
 }
 
 int CourseInfo::columnCount(const QModelIndex &parent) const {
-    return 8;
+    return 7;
 }
 
 QVariant CourseInfo::data(const QModelIndex &index, int role) const {
-    if(role != Qt::DisplayRole || index.column() >= 8 || index.row() >= students.size()) {
+    if(index.column() >= columnCount() || index.row() >= students.size()) {
         return QVariant();
     }
-    Student s = students[index.row()];
-    switch(index.column()) {
-    case 0: return index.column()+1;
-    case 1: return s.student_id;
-    case 2: return s.last_name;
-    case 3: return s.middle_name;
-    case 4: return s.first_name;
-    case 5: return s.dayofbirth;
-    case 6: return s.point;
+
+    if(role == Qt::DisplayRole) {
+        Student s = students[index.row()];
+        switch(index.column()) {
+        case 0: return index.column()+1;
+        case 1: return s.student_id;
+        case 2: return s.last_name;
+        case 3: return s.middle_name;
+        case 4: return s.first_name;
+        case 5: return s.dayofbirth;
+        case 6: return s.point;
+        }
     }
     return QVariant();
 }

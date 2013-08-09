@@ -20,6 +20,7 @@
 #define MAINWINDOW_H
 
 #include "processwidget.h"
+#include "courseinfowidget.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -36,9 +37,11 @@ public:
 private:
     Ui::MainWindow *ui;
     ProcessWidget* procWidget;
+    CourseInfoWidget* courseWidget;
 
 public slots:
     void ShowProcWidget();
+    void ShowCourseWidget();
 };
 
 #endif // MAINWINDOW_H

@@ -22,3 +22,37 @@
 CourseSummary::CourseSummary()
 {
 }
+
+CourseSummaryList::CourseSummaryList() {
+
+}
+
+int CourseSummaryList::rowCount(const QModelIndex &parent) const{
+    return size();
+}
+
+int CourseSummaryList::columnCount(const QModelIndex &parent) const{
+    return 9;
+}
+
+QVariant CourseSummaryList::data(const QModelIndex &index, int role) const{
+    if(index.column() >= columnCount() || index.row() >= size()) {
+        return QVariant();
+    }
+
+    if(role == Qt::DisplayRole) {
+        CourseSummary s = at(index.row());
+        switch(index.column()) {
+        case 0: return index.column()+1;
+        case 1: return s.course_id;
+        case 2: return s.term;
+        case 3: return s.year;
+        case 4: return s.subject;
+        case 5: return s.credits;
+        case 6: return s.percent;
+        case 7: return s.description;
+        case 8: return s.lecturer;
+        }
+    }
+    return QVariant();
+}

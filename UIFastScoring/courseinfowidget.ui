@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>CourseInfoWidget</class>
- <widget class="QWidget" name="CourseInfoWidget">
+ <widget class="QTabWidget" name="CourseInfoWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,19 +11,73 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>CourseInfoWidget</string>
   </property>
-  <widget class="QTableView" name="tableView">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>50</y>
-     <width>256</width>
-     <height>192</height>
-    </rect>
-   </property>
+  <property name="currentIndex">
+   <number>1</number>
+  </property>
+  <widget class="QWidget" name="tabList">
+   <attribute name="title">
+    <string>Danh sách</string>
+   </attribute>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLineEdit" name="lineEdit"/>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_2"/>
+    </item>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Tim</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="QTableView" name="tableView"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="tabDetail">
+   <attribute name="title">
+    <string>Chi tiết</string>
+   </attribute>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>20</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CourseInfoWidget</receiver>
+   <slot>LoadCourseList()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>242</x>
+     <y>19</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>LoadCourseList()</slot>
+ </slots>
 </ui>
