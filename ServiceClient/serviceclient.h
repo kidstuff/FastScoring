@@ -27,6 +27,7 @@
 #include <QAbstractTableModel>
 
 class CourseInfo;
+class QNetworkReply;
 
 class ServiceClient : public QObject
 {
@@ -46,6 +47,8 @@ signals:
     void GetCourseInfoFinished(CourseInfo* inf, Response r);
     void GetCourseListFinished(CourseSummaryList* sumary, Response r);
 
+private slots:
+    void cLstReplRead(QNetworkReply* repl);
 };
 
 #endif // SERVICECLIENT_H

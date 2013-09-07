@@ -20,6 +20,8 @@
 #ifndef RESPONSE_H
 #define RESPONSE_H
 
+#include <QString>
+
 /**
  * @brief The Response class provide a simple infomation about network response
  */
@@ -27,6 +29,8 @@ class Response
 {
 public:
     Response();
+    int Status;
+    QString Message;
 };
 
 #endif // RESPONSE_H

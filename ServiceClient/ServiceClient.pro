@@ -1,6 +1,6 @@
 TEMPLATE = lib
 CONFIG += console
-QT += core
+QT += core network
 
 SOURCES += \
     serviceclient.cpp \

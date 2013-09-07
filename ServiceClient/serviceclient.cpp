@@ -20,6 +20,14 @@
 #include "courseinfo.h"
 #include "serviceclient.h"
 #include <QDate>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QDebug>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
 
 ServiceClient::ServiceClient()
 {
@@ -86,24 +94,95 @@ void ServiceClient::GetCourseInfo(QString idStr){
 
 void ServiceClient::GetCourseList(QString year, QString term, QString faculty,
                    QString supject, QString lecturer, QUrlQuery* extra){
-    CourseSummaryList* summaries = new CourseSummaryList();
-    for(int i=0; i<30;i++){
-        CourseSummary summary;
-        summary.course_id = "1231231231";
-        summary.credits = "2";
-        summary.description = "qwejkwhqe 12312";
-        summary.percent = "20";
-        summary.subject = "tin hoc dai cuong";
-        summary.term = "2";
-        summary.year = "2013";
-        summary.lecturer ="ng v a";
-        summaries->append(summary);
-    }
-    Response r;
 
-    emit GetCourseListFinished(summaries, r);
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    connect(manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(cLstReplRead(QNetworkReply*)));
+    manager->get(QNetworkRequest(QUrl("http://localhost:12345/GetCourseList")));
+    //manager->deleteLater();
 }
 
 void ServiceClient::SubmitScores(){
 
+}
+
+void ServiceClient::cLstReplRead(QNetworkReply* repl) {
+    QJsonDocument json = QJsonDocument::fromJson(repl->readAll());
+    repl->deleteLater();
+    sender()->deleteLater();
+
+    Response r;
+    CourseSummaryList* summaries = new CourseSummaryList();
+    if(!json.isArray()) {
+        r.Status = 500;
+        emit GetCourseListFinished(summaries, r);
+        return;
+    }
+    QJsonArray jArrCLst = json.array();
+    QJsonValue val, field;
+    QJsonObject obj;
+    for(int i=0; i < jArrCLst.size(); i++) {
+        val = jArrCLst[i];
+        if(!val.isObject()) {
+            continue;
+        }
+        obj = val.toObject();
+        CourseSummary summary;
+        field = obj.value("course_id");
+        if(!field.isUndefined()) {
+            summary.course_id = field.toString();
+        }
+
+        field = obj.value("credits");
+        if(!field.isUndefined()) {
+            summary.credits = field.toString();
+        }
+
+        field = obj.value("description");
+        if(!field.isUndefined()) {
+            summary.description = field.toString();
+        }
+
+        field = obj.value("percent");
+        if(!field.isUndefined()) {
+            summary.percent = field.toString();
+        }
+
+        field = obj.value("subject");
+        if(!field.isUndefined()) {
+            summary.subject = field.toString();
+        }
+
+        field = obj.value("term");
+        if(!field.isUndefined()) {
+            summary.term = field.toString();
+        }
+
+        field = obj.value("year");
+        if(!field.isUndefined()) {
+            summary.year = field.toString();
+        }
+
+        field = obj.value("lecturer");
+        if(!field.isUndefined()) {
+            summary.lecturer = field.toString();
+        }
+        summaries->append(summary);
+    }
+
+
+//    for(int i=0; i<30;i++){
+//        CourseSummary summary;
+//        summary.course_id = "1231231231";
+//        summary.credits = "2";
+//        summary.description = "qwejkwhqe 12312";
+//        summary.percent = "20";
+//        summary.subject = "tin hoc dai cuong";
+//        summary.term = "2";
+//        summary.year = "2013";
+//        summary.lecturer ="ng v a";
+//        summaries->append(summary);
+//    }
+
+    emit GetCourseListFinished(summaries, r);
 }

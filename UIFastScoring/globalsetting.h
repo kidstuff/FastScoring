@@ -34,6 +34,7 @@ public:
     static int method();
     static vector<int> steps();
     static QString dataPath();
+    static QString serviceURI();
 };
 
 #endif // GLOBALSETTING_H

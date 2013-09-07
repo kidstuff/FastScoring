@@ -28,7 +28,7 @@ bool GlobalSetting::doNormalize() {
 }
 
 int GlobalSetting::method() {
-    return GlobalSetting::CHAR;
+    return GlobalSetting::POINT;
 }
 
 vector<int> GlobalSetting::steps() {
@@ -42,4 +42,8 @@ vector<int> GlobalSetting::steps() {
 
 QString GlobalSetting::dataPath() {
     return getenv("DATAPATH");
+}
+
+QString GlobalSetting::serviceURI() {
+    return getenv("SERVICE_URI");
 }
