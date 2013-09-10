@@ -20,6 +20,8 @@
 #ifndef COURSEINFOWIDGET_H
 #define COURSEINFOWIDGET_H
 
+#include "serviceclient.h"
+#include "formprinter.h"
 #include "coursesummary.h"
 #include "response.h"
 #include <QTabWidget>
@@ -40,12 +42,15 @@ public:
 public slots:
     void LoadCourseList();
     void DisplayCourseList(CourseSummaryList* sumary, Response r);
+    void Print();
 
 signals:
+    void PrintClicked(CourseInfo*);
     void GetCourseList(QString year, QString term, QString faculty,
                        QString supject, QString lecturer, QUrlQuery* extra);
 private:
     Ui::CourseInfoWidget *ui;
+    FormPrinter* fprinter;
 };
 
 #endif // COURSEINFOWIDGET_H

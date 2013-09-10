@@ -18,13 +18,23 @@
 ****************************************************************************/
 
 #include "courseinfowidget.h"
+#include "globalsetting.h"
 #include "ui_courseinfowidget.h"
+#include <QDebug>
 
 CourseInfoWidget::CourseInfoWidget(QWidget *parent) :
     QTabWidget(parent),
     ui(new Ui::CourseInfoWidget)
 {
     ui->setupUi(this);
+    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    fprinter = new FormPrinter(GlobalSetting::steps());
+//    connect(this, &MainWindow::PrintClicked,
+//            fprinter, &FormPrinter::Print);
+
+    connect(ui->btPrint, &QPushButton::clicked,
+            this, &CourseInfoWidget::Print);
 }
 
 void CourseInfoWidget::LoadCourseList() {
@@ -38,4 +48,10 @@ void CourseInfoWidget::DisplayCourseList(CourseSummaryList *sumary, Response r) 
 CourseInfoWidget::~CourseInfoWidget()
 {
     delete ui;
+}
+
+void CourseInfoWidget::Print() {
+    CourseInfo inf;
+    qDebug() << "clekcekdakjdhakda";
+    emit PrintClicked(&inf);
 }

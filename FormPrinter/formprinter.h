@@ -19,7 +19,7 @@
 #ifndef FORMPRINTER_H
 #define FORMPRINTER_H
 
-#include <QPrinter>
+#include <QtPrintSupport/QPrinter>
 #include <QPainter>
 #include <vector>
 #include "courseinfo.h"

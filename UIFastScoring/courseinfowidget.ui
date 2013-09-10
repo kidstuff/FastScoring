@@ -14,7 +14,7 @@
    <string>CourseInfoWidget</string>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>1</number>
   </property>
   <widget class="QWidget" name="tabList">
    <attribute name="title">
@@ -43,7 +43,7 @@
    <attribute name="title">
     <string>Chi tiết</string>
    </attribute>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="btPrint">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -67,8 +67,8 @@
    <slot>LoadCourseList()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>325</x>
-     <y>20</y>
+     <x>388</x>
+     <y>47</y>
     </hint>
     <hint type="destinationlabel">
      <x>242</x>
