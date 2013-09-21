@@ -8,7 +8,8 @@ SOURCES += \
     courseinfo.cpp \
     response.cpp \
     coursesummary.cpp \
-    digitresult.cpp
+    digitresult.cpp \
+    globalsetting.cpp
 
 HEADERS += \
     serviceclient.h \
@@ -16,5 +17,6 @@ HEADERS += \
     courseinfo.h \
     response.h \
     coursesummary.h \
-    digitresult.h
+    digitresult.h \
+    globalsetting.h
 

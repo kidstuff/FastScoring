@@ -19,6 +19,7 @@
 
 #include "courseinfo.h"
 #include "serviceclient.h"
+#include "globalsetting.h"
 #include <QDate>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -34,9 +35,29 @@ ServiceClient::ServiceClient()
 }
 
 void ServiceClient::Login(QString username, QString password){
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    connect(manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(loginReplRead(QNetworkReply*)));
+    QNetworkRequest req(QUrl(GlobalSetting::serviceURI().
+                             append("/Login")));
+    QJsonObject obj;
+    obj.insert("Email", username);
+    obj.insert("Password", password);
+
+    manager->post(req, QJsonDocument(obj).toBinaryData());
+}
+
+void ServiceClient::loginReplRead(QNetworkReply* repl){
+    sender()->deleteLater();
     Response r;
+    r.Status = repl->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    if(r.Status == 200){
+        this->token = repl->rawHeader("Token");
+    }
+
     emit LoginFinished(r);
 }
+
 void ServiceClient::Logout(){
     Response r;
     emit LogoutFinished(r);
@@ -98,8 +119,11 @@ void ServiceClient::GetCourseList(QString year, QString term, QString faculty,
     QNetworkAccessManager* manager = new QNetworkAccessManager();
     connect(manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(cLstReplRead(QNetworkReply*)));
-    manager->get(QNetworkRequest(QUrl("http://localhost:12345/GetCourseList")));
-    //manager->deleteLater();
+
+    QNetworkRequest req(QUrl(GlobalSetting::serviceURI().
+                             append("/GetCourseList")));
+    req.setRawHeader("Token", this->token);
+    manager->get(req);
 }
 
 void ServiceClient::SubmitScores(){

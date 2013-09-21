@@ -34,6 +34,8 @@ class ServiceClient : public QObject
     Q_OBJECT
 public:
     ServiceClient();
+private:
+    QByteArray token;
 public slots:
     void Login(QString username, QString password);
     void Logout();
@@ -49,6 +51,7 @@ signals:
 
 private slots:
     void cLstReplRead(QNetworkReply* repl);
+    void loginReplRead(QNetworkReply* repl);
 };
 
 #endif // SERVICECLIENT_H
