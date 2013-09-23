@@ -38,7 +38,7 @@ class CourseInfoWidget : public QTabWidget
 public:
     explicit CourseInfoWidget(QWidget *parent = 0);
     ~CourseInfoWidget();
-    
+    FormPrinter* fprinter;
 public slots:
     void LoadCourseList();
     void DisplayCourseList(CourseSummaryList* sumary, Response r);
@@ -50,7 +50,7 @@ signals:
                        QString supject, QString lecturer, QUrlQuery* extra);
 private:
     Ui::CourseInfoWidget *ui;
-    FormPrinter* fprinter;
+
 };
 
 #endif // COURSEINFOWIDGET_H
