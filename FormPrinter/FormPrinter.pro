@@ -4,6 +4,7 @@ QT += core xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += printsupport
 
+LIBS += -lqrencode
 SOURCES += \
     formprinter.cpp
 

@@ -17,12 +17,13 @@
 **    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#include "formprinter.h"
 #include "courseinfowidget.h"
 #include "globalsetting.h"
 #include "ui_courseinfowidget.h"
-#include <QDebug>
-#include "formprinter.h"
 #include "mainwindow.h"
+#include <QDebug>
+#include <QtPrintSupport/QPrintPreviewDialog>
 
 CourseInfoWidget::CourseInfoWidget(QWidget *parent) :
     QTabWidget(parent),
@@ -32,6 +33,7 @@ CourseInfoWidget::CourseInfoWidget(QWidget *parent) :
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
     fprinter = new FormPrinter(GlobalSetting::steps());
+
     connect(this, &CourseInfoWidget::PrintClicked,
             fprinter, &FormPrinter::Print);
 

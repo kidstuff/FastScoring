@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
+QT+=printsupport
 
 SUBDIRS += \
     UIFastScoring \
@@ -6,3 +7,4 @@ SUBDIRS += \
     FormPrinter \
     DigitReader \
     ServiceClient
+

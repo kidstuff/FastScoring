@@ -20,33 +20,36 @@
 #define FORMPRINTER_H
 
 #include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintPreviewDialog>
 #include <QPainter>
 #include <vector>
 #include "courseinfo.h"
 
 using namespace std;
 
-class FormPrinter
+class FormPrinter : public QObject
 {
+    Q_OBJECT
 public:
-    FormPrinter(vector<int> steps);
+    explicit FormPrinter(vector<int> steps);
     enum FormType {CHAR, POINT};
 
 public slots:
     void Print(CourseInfo* r);
+    void printPreview(QPrinter* printer);
     CourseInfo* generatedata(int n);
 private:
     vector<int> odd_steps;
     QPrinter *printer;
     QPainter *painter;
+    QPrintPreviewDialog* dialog;
     int n;
     double h1;
     double h2;
     int text_height;
     void print_header(CourseInfo* r,QPoint p);
     void print_footer(CourseInfo* r,QPoint p);
-
-    void print_table(CourseInfo* r);
+    void print_table(CourseInfo* r,int m);
         void print_cl_number(CourseInfo* r,QPoint p); //0,2222,400
         void print_cl_stid(CourseInfo* r,QPoint p);//400,1200
         void print_cl_stname(CourseInfo* r,QPoint);//1600,2200
@@ -67,6 +70,10 @@ private:
     void print_number(int num, QPoint p);
     void print_pagecode(QPoint p);
     void print_rectangle(QPoint p);
+    void print_c_point(QPoint p);
+    void print_p_point(QPoint p);
+    void print_qrcode(QPoint p);
+
 };
 
 #endif // FORMPRINTER_H
