@@ -26,6 +26,8 @@
 #include "response.h"
 #include <QTabWidget>
 #include <QUrlQuery>
+#include <QtPrintSupport/QPrintPreviewWidget>
+#include <QtPrintSupport/QPrintPreviewDialog>
 
 namespace Ui {
 class CourseInfoWidget;
@@ -39,13 +41,18 @@ public:
     explicit CourseInfoWidget(QWidget *parent = 0);
     ~CourseInfoWidget();
     FormPrinter* fprinter;
+    //QPrintPreviewWidget* preview;
+    QPrintPreviewDialog* preview;
+    QPrinter* printer;
 public slots:
     void LoadCourseList();
     void DisplayCourseList(CourseSummaryList* sumary, Response r);
     void Print();
+    void printpre(QPrinter* printer);
 
 signals:
-    void PrintClicked(CourseInfo*);
+    //void PrintClicked(CourseInfo*);
+    void PrintClicked(QPrinter*);
     void GetCourseList(QString year, QString term, QString faculty,
                        QString supject, QString lecturer, QUrlQuery* extra);
 private:

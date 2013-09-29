@@ -27,19 +27,25 @@
 #include "globalsetting.h"
 #include "QGraphicsView"
 
-FormPrinter::FormPrinter(vector<int> steps)
+FormPrinter::FormPrinter(QPrinter* print)
 {
-    odd_steps=steps;
-    printer=new QPrinter(QPrinter::HighResolution);
-    printer->setPageSize(QPrinter::A4);
-    printer->setPageMargins(8,18,2,2,QPrinter::Unit());
-    QString filename=QFileDialog::getSaveFileName(0,"Save File","print",".pdf");
-    printer->setOutputFileName(filename);
+    //odd_steps=steps;
+//    printer=new QPrinter(QPrinter::HighResolution);
+//    printer->setPageSize(QPrinter::A4);
+//    printer->setPageMargins(8,18,2,2,QPrinter::Unit());
+    printer=print;
     painter=new QPainter(printer);
     n=99;
     h1=307.5;
     h2=302.5;
     text_height=200;
+}
+void FormPrinter::printPreview(QPrinter *print)
+{
+    printer=print;
+    painter->begin(printer);
+    painter->drawText(0,0,"hello");
+    painter->end();
 }
 void FormPrinter::Print(CourseInfo *r)
 {

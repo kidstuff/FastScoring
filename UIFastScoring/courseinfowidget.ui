@@ -46,8 +46,8 @@
    <widget class="QPushButton" name="btPrint">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>20</y>
+      <x>320</x>
+      <y>0</y>
       <width>80</width>
       <height>23</height>
      </rect>

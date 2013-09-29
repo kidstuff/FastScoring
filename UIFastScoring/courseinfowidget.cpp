@@ -24,6 +24,7 @@
 #include "mainwindow.h"
 #include <QDebug>
 #include <QtPrintSupport/QPrintPreviewDialog>
+#include <QtPrintSupport/QPrintPreviewWidget>
 
 CourseInfoWidget::CourseInfoWidget(QWidget *parent) :
     QTabWidget(parent),
@@ -32,13 +33,25 @@ CourseInfoWidget::CourseInfoWidget(QWidget *parent) :
     ui->setupUi(this);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    fprinter = new FormPrinter(GlobalSetting::steps());
 
-    connect(this, &CourseInfoWidget::PrintClicked,
-            fprinter, &FormPrinter::Print);
 
+    printer=new QPrinter(QPrinter::HighResolution);
+    fprinter=new FormPrinter(printer);
+    //preview=new QPrintPreviewWidget(printer,this);
+    preview=new QPrintPreviewDialog(printer,this);
+
+    printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setOutputFileName("sample.pdf");
+    printer->setPaperSize(QPrinter::A4);
+
+//    connect(this, &CourseInfoWidget::PrintClicked,
+//            fprinter, &FormPrinter::Print);
+    connect(this,SIGNAL(PrintClicked(QPrinter*)),this,SLOT(printpre(QPrinter*)));
     connect(ui->btPrint, &QPushButton::clicked,
             this, &CourseInfoWidget::Print);
+    connect(preview,SIGNAL(paintRequested(QPrinter*)),this,SLOT(printpre(QPrinter*)));
+
+    preview->showMaximized();
 }
 
 void CourseInfoWidget::LoadCourseList() {
@@ -55,7 +68,15 @@ CourseInfoWidget::~CourseInfoWidget()
 }
 
 void CourseInfoWidget::Print() {
-    CourseInfo* inf;
-    inf=fprinter->generatedata(99);
-    emit PrintClicked(inf);
+//    CourseInfo* inf;
+//    inf=fprinter->generatedata(99);
+    emit PrintClicked(printer);
+    preview->exec();
+}
+void CourseInfoWidget::printpre(QPrinter* printer)
+{
+    fprinter=new FormPrinter(printer);
+    CourseInfo* r=fprinter->generatedata(99);
+    fprinter->Print(r);
+
 }

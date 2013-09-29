@@ -31,12 +31,12 @@ class FormPrinter : public QObject
 {
     Q_OBJECT
 public:
-    explicit FormPrinter(vector<int> steps);
+    explicit FormPrinter(QPrinter* print);
     enum FormType {CHAR, POINT};
 
 public slots:
     void Print(CourseInfo* r);
-    void printPreview(QPrinter* printer);
+    void printPreview(QPrinter* print);
     CourseInfo* generatedata(int n);
 private:
     vector<int> odd_steps;
