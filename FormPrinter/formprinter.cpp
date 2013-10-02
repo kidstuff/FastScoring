@@ -22,52 +22,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <qrencode.h>
-#include "QPrintPreviewDialog"
-#include "QPrintPreviewWidget"
+#include <QPrintPreviewDialog>
+#include <QGraphicsView>
+#include <QDebug>
 #include "globalsetting.h"
-#include "QGraphicsView"
 
-FormPrinter::FormPrinter(QPrinter* print)
+FormPrinter::FormPrinter(QPrinter* printer)
 {
-    //odd_steps=steps;
-//    printer=new QPrinter(QPrinter::HighResolution);
-//    printer->setPageSize(QPrinter::A4);
-//    printer->setPageMargins(8,18,2,2,QPrinter::Unit());
-    printer=print;
-    painter=new QPainter(printer);
+    this->printer = printer;
+    printer->setPageSize(QPrinter::A4);
+    printer->setPageMargins(8,18,2,2,QPrinter::Unit());
+
+    painter=new QPainter();
     n=99;
     h1=307.5;
     h2=302.5;
     text_height=200;
+    dialog = new QPrintPreviewDialog(printer, 0, 0);
+    connect(dialog, &QPrintPreviewDialog::paintRequested,
+            this, &FormPrinter::printPreview);
 }
-void FormPrinter::printPreview(QPrinter *print)
+void FormPrinter::printPreview(QPrinter *printer)
 {
-    printer=print;
-    painter->begin(printer);
-    painter->drawText(0,0,"hello");
-    painter->end();
-}
-void FormPrinter::Print(CourseInfo *r)
-{
-    painter->begin(printer);
     QPoint p(0,0);
     QPoint p1(0,10604);
     QPoint pr1(5165,1825);
     QPoint pr2(5165,10207);
     QPoint qrcode(5165+29,1825+29);
+
+    painter->begin(printer);
     this->print_qrcode(qrcode);
     this->print_rectangle(pr1);
     this->print_rectangle(pr2);
-    this->print_header(r,p);
-    this->print_footer(r,p1);
-    this->print_table(r,99);
+    this->print_header(printData,p);
+    this->print_footer(printData,p1);
+    this->print_table(printer, printData);
     painter->end();
-
 }
-CourseInfo* FormPrinter::generatedata(int n){
-    CourseInfo* r=new CourseInfo();
+void FormPrinter::Print(CourseInfo *info)
+{
+    CourseInfo* r = new CourseInfo();
 
-    for(int i=0;i<n;i++){
+    for(int i=0;i<75;i++){
         Student s;
         s.student_id="K36.104.052";
         s.first_name="Đông";
@@ -110,8 +106,12 @@ CourseInfo* FormPrinter::generatedata(int n){
     //right footer
     r->rpft_day="Tp HCM, Ngày     Tháng    Năm";
     r->teach="Giảng viên giảng dạy";
-    return r;
+    printData = r;
+    dialog->exec();
+
+    emit done();
 }
+
 void FormPrinter::print_header(CourseInfo* r, QPoint p){
     //header height:1955px, width:9250
     //p(0,0)
@@ -162,7 +162,7 @@ void FormPrinter::print_footer(CourseInfo *r, QPoint p)
     painter->drawText(650,p.y()+300,r->auth);
     painter->drawText(580,p.y()+600,r->sign);
 }
-void FormPrinter::print_table(CourseInfo* r,int m)
+void FormPrinter::print_table(QPrinter *printer, CourseInfo* r)
 {
     QPoint p_rect1(5165,1825);
     QPoint p_rect2(5165,10207);
@@ -218,7 +218,7 @@ void FormPrinter::print_table(CourseInfo* r,int m)
     p_st.setY(p_st.y()+h2);
     p_sig.setY(p_sig.y()+h2);
     p_sbd.setY(p_sbd.y()+h2);
-    for(int i=0;i<m;i++)
+    for(int i=0;i<r->students.size();i++)
     {
         painter->setFont(QFont("times new roman",12,1,false));
 

@@ -40,11 +40,13 @@ void ServiceClient::Login(QString username, QString password){
             this, SLOT(loginReplRead(QNetworkReply*)));
     QNetworkRequest req(QUrl(GlobalSetting::serviceURI().
                              append("/Login")));
+    req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
+
     QJsonObject obj;
     obj.insert("Email", username);
     obj.insert("Password", password);
 
-    manager->post(req, QJsonDocument(obj).toBinaryData());
+    manager->post(req, QJsonDocument(obj).toJson());
 }
 
 void ServiceClient::loginReplRead(QNetworkReply* repl){
@@ -53,8 +55,9 @@ void ServiceClient::loginReplRead(QNetworkReply* repl){
     r.Status = repl->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     if(r.Status == 200){
         this->token = repl->rawHeader("Token");
+        qDebug() << "token" << QString::fromUtf8(this->token);
     }
-
+    qDebug() << "login finished" << r.Status;
     emit LoginFinished(r);
 }
 
@@ -120,8 +123,9 @@ void ServiceClient::GetCourseList(QString year, QString term, QString faculty,
     connect(manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(cLstReplRead(QNetworkReply*)));
 
-    QNetworkRequest req(QUrl(GlobalSetting::serviceURI().
-                             append("/GetCourseList")));
+    QUrl url(GlobalSetting::serviceURI().append("/GetCourseList"));
+    qDebug() << url;
+    QNetworkRequest req(url);
     req.setRawHeader("Token", this->token);
     manager->get(req);
 }
@@ -140,6 +144,7 @@ void ServiceClient::cLstReplRead(QNetworkReply* repl) {
     if(!json.isArray()) {
         r.Status = 500;
         emit GetCourseListFinished(summaries, r);
+        qDebug() << "error";
         return;
     }
     QJsonArray jArrCLst = json.array();
@@ -194,19 +199,6 @@ void ServiceClient::cLstReplRead(QNetworkReply* repl) {
         summaries->append(summary);
     }
 
-
-//    for(int i=0; i<30;i++){
-//        CourseSummary summary;
-//        summary.course_id = "1231231231";
-//        summary.credits = "2";
-//        summary.description = "qwejkwhqe 12312";
-//        summary.percent = "20";
-//        summary.subject = "tin hoc dai cuong";
-//        summary.term = "2";
-//        summary.year = "2013";
-//        summary.lecturer ="ng v a";
-//        summaries->append(summary);
-//    }
-
+    qDebug() << summaries;
     emit GetCourseListFinished(summaries, r);
 }

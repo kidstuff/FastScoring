@@ -42,6 +42,9 @@ private:
 public slots:
     void ShowProcWidget();
     void ShowCourseWidget();
+    void CheckLoginResponse(Response r);
+signals:
+    void LoginRequest(QString username, QString password);
 };
 
 #endif // MAINWINDOW_H

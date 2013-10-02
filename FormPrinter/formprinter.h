@@ -21,6 +21,7 @@
 
 #include <QtPrintSupport/QPrinter>
 #include <QtPrintSupport/QPrintPreviewDialog>
+#include <QtPrintSupport/QPrinter>
 #include <QPainter>
 #include <vector>
 #include "courseinfo.h"
@@ -31,34 +32,26 @@ class FormPrinter : public QObject
 {
     Q_OBJECT
 public:
-    explicit FormPrinter(QPrinter* print);
+    explicit FormPrinter(QPrinter *printer);
     enum FormType {CHAR, POINT};
 
 public slots:
-    void Print(CourseInfo* r);
-    void printPreview(QPrinter* print);
-    CourseInfo* generatedata(int n);
+    void Print(CourseInfo* info);
+    void printPreview(QPrinter* printer);
+
 private:
     vector<int> odd_steps;
-    QPrinter *printer;
     QPainter *painter;
+    QPrinter *printer;
     QPrintPreviewDialog* dialog;
     int n;
     double h1;
     double h2;
     int text_height;
+    CourseInfo* printData;
     void print_header(CourseInfo* r,QPoint p);
     void print_footer(CourseInfo* r,QPoint p);
-    void print_table(CourseInfo* r,int m);
-        void print_cl_number(CourseInfo* r,QPoint p); //0,2222,400
-        void print_cl_stid(CourseInfo* r,QPoint p);//400,1200
-        void print_cl_stname(CourseInfo* r,QPoint);//1600,2200
-        void print_cl_stbirth(CourseInfo* r,QPoint p);//3800,650
-        void print_cl_stmark(CourseInfo* r,QPoint p);//5450,1200
-        void print_cl_stringmark(QPoint p);//6650,400
-        void print_cl_stpagenum(QPoint p);//7050,1100
-        void print_cl_stsignature(QPoint p);//8150
-        void print_cl_stcode(CourseInfo* r,QPoint p);
+    void print_table(QPrinter *printer, CourseInfo* r);
 
     void print_line1(QPoint p);
     void print_line2(QPoint p);
@@ -73,6 +66,9 @@ private:
     void print_c_point(QPoint p);
     void print_p_point(QPoint p);
     void print_qrcode(QPoint p);
+
+signals:
+    void done();
 
 };
 

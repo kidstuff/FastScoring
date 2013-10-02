@@ -19,6 +19,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "serviceclient.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -37,6 +38,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionCourseList, &QAction::triggered,
             this, &MainWindow::ShowCourseWidget);
+
+    connect(this, &MainWindow::LoginRequest,
+            client, &ServiceClient::Login);
+    connect(client, &ServiceClient::LoginFinished,
+            this, &MainWindow::CheckLoginResponse);
 }
 
 MainWindow::~MainWindow() {
@@ -45,9 +51,19 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::ShowProcWidget() {
-    setCentralWidget(procWidget);
+    emit LoginRequest(ui->username->text(), ui->password->text());
+    //setCentralWidget(procWidget);
 }
 
 void MainWindow::ShowCourseWidget() {
     setCentralWidget(courseWidget);
+}
+
+void MainWindow::CheckLoginResponse(Response r) {
+    if(r.Status == 200) {
+        setCentralWidget(procWidget);
+    } else {
+        QMessageBox::warning(this, "Login fialed",
+                             QString::number(r.Status).append(r.Message));
+    }
 }
